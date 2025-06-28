@@ -21,7 +21,12 @@ const route = createBrowserRouter([
             }
         ]
     }
-])
+],
+    // Fix github pages base page
+    {
+        basename: import.meta.env.BASE_URL
+    }
+);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
