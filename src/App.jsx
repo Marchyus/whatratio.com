@@ -1,0 +1,220 @@
+import {useCallback, useEffect, useState} from 'react'
+import {useSearchParams} from "react-router-dom";
+import isEqual from "lodash/isEqual.js";
+import {prepareMultiLineRechartData} from "./utils/prepareRechartData.js";
+import LineGraph from "./components/LineGraph.jsx";
+import SingleGearSet from "./components/SingleGearSet.jsx";
+import BuildTable from "./components/BuildTable.jsx";
+import {urlParamsParse} from './utils/url.js'
+import {calculateGearRatios} from "./utils/calculations.js";
+import './App.css'
+import {ToastContainer} from "react-toastify";
+import {getActiveSet} from "./utils/activeSetManager.js";
+
+function App() {
+    /*
+    * Persistent gear sets
+    * store in Object, e.g.:
+    * {"set A name": {"front": [32, 46], "back": [11, 13, 15, 18, 20, 22, 24, 28, 30, 32, 34, 36]}, "set B name: {"front"...........""}}
+    * */
+
+    // States about Gear Sets
+    const [gearSetsInUrl, setGearSetsInUrl] = useState({}); // read from URL
+    const [activeSet, setActiveSet] = useState({}); // Gears which will be drawn (active )
+    const [activeSetRatios, setActiveSetRatios] = useState({}); // Ratios calculated on active gears
+    const [rechartAllGears, setRechartAllGears] = useState([]);
+    const [rechartUsableGears, setRechartUsableGears] = useState([]);
+
+
+    // User customizable values
+    const [ratioPercentage, setRatioPercentage] = useState(7); // user defined value, what % is acceptable
+    const [crossChaining, setCrossChaining] = useState(true); // calculate or ignore crosschaining (max to max and min to min)
+
+    // Loading and parsing related States
+    const [loading, setLoading] = useState(false);
+    const [isUrlSetsParsed, setIsUrlSetsParsed] = useState(false);
+    const [isActiveSetParsed, setIsActiveSetParsed] = useState(false);
+
+
+    // functions to be moved to own utility files
+    // Read from history
+    const readHistory = () => {
+        const history = localStorage.getItem('history');
+        return history ? JSON.parse(history) : [];
+    }
+    // Write to history
+    const addToHistory = useCallback((sets) => {
+        const currentHistory = readHistory();
+        currentHistory.push(sets);
+        if (currentHistory.length < 10) {
+            localStorage.setItem('history', JSON.stringify(currentHistory.slice(-10)))
+        }
+    }, []);
+
+    // Get URL params from URL
+    const [queryParameters, setSearchParameters] = useSearchParams();
+    useEffect(() => {
+        const setsParam = queryParameters.get('sets'); // read .../?sets=
+        if (setsParam) {
+            const parsedUrlParams = urlParamsParse(setsParam) // parse parameters from url
+            setGearSetsInUrl(parsedUrlParams); // save parameters
+            setSearchParameters({}, {replace: true}); // clear URL
+            setIsUrlSetsParsed(true);
+        }
+    }, [])
+
+    // Read current active set
+    useEffect(() => {
+        const result = getActiveSet();
+            console.log("THIS ARE RESULTS:", result)
+            if (result.success) {
+                setActiveSet(result.activeSet)
+            }
+            setIsActiveSetParsed(true);
+    }, [])
+
+    // Store active Set to local storage
+    useEffect(() => {
+        if (Object.keys(activeSet).length > 0) {
+            localStorage.setItem('activeSet', JSON.stringify(activeSet))
+        }
+        else if (localStorage.getItem('activeSet') !== null) {
+            localStorage.removeItem('activeSet');
+        }
+    }, [activeSet])
+
+    // compare sets in URL and local storage.
+    // if both exist, set URL as active, push local storage one to history
+    useEffect(() => {
+        if (isUrlSetsParsed && isActiveSetParsed && (Object.keys(gearSetsInUrl).length > 0 || Object.keys(activeSet).length > 0)) {
+            // If URL contains gear set(s), make it active
+            if (Object.keys(gearSetsInUrl).length > 0) {
+                // check if sets in URL are same as Active Sets
+                const isUrlSameAsStored = isEqual(gearSetsInUrl, activeSet);
+                if (!isUrlSameAsStored && Object.keys(activeSet).length > 0) {
+                    addToHistory(activeSet);
+                }
+                setActiveSet(gearSetsInUrl);
+            }
+        }
+    }, [isUrlSetsParsed, isActiveSetParsed, gearSetsInUrl, activeSet, addToHistory]);
+
+    // update activeSet in local storage
+    useEffect(() => {
+        if (Object.keys(activeSet).length > 0) {
+            localStorage.setItem('activeSet', JSON.stringify(activeSet));
+        }
+    }, [activeSet]);
+
+    // Calculate ratios in an active set
+    useEffect(() => {
+        // clear if no active sets
+        if (Object.keys(activeSet).length === 0) {
+            setActiveSetRatios({});
+            return;
+        }
+
+        const newRatios = {};
+
+        for (const [key, value] of Object.entries(activeSet)){
+            newRatios[key] = calculateGearRatios(value.front, value.back, ratioPercentage, crossChaining)
+        }
+        if (!isEqual(newRatios, activeSetRatios)) {
+            setActiveSetRatios(newRatios);
+        }
+
+    }, [activeSet])
+
+    // TMP: print active set
+    useEffect(() => {
+        // console.log("ACTIVE SET:", activeSet);
+        console.log("ACTIVE SET RATIOS CALCULATED:", activeSetRatios)
+    }, [activeSetRatios])
+
+    // format data to be used in Rechart
+    useEffect(() => {
+        const rechartData = prepareMultiLineRechartData(activeSetRatios)
+        setRechartAllGears(rechartData.allRechart)
+        setRechartUsableGears(rechartData.usableRechart)
+    }, [activeSetRatios])
+
+    // data updating
+    const handleUpdateActiveSet = (oldName, newName, newGearData) => {
+        // mutable copy
+        setActiveSet( prev => {
+            const newActiveSet = {...prev};
+
+            // new or old gear data?
+            const gearData = newGearData || newActiveSet[oldName]
+
+            // new name provided? If not, generate unique set#N
+            let finalName = newName.trim();
+            if (finalName.length === 0) {
+                let i = 1;
+                while (true) {
+                    const defaultName = `set#${i}`;
+                    if (!newActiveSet.hasOwnProperty(defaultName)) {
+                        finalName = defaultName;
+                        break;
+                    }
+                    i++;
+                }
+            }
+
+            // provided name matches some old and existing name?
+            if (oldName !== finalName && newActiveSet.hasOwnProperty(finalName)) {
+                finalName = `${finalName}_2`
+            }
+
+            // name changed?
+            if (oldName !== finalName) {
+                delete newActiveSet[oldName];
+            }
+            // set (new) name and/or new data:
+            newActiveSet[finalName] = gearData;
+            return newActiveSet;
+        })
+    }
+
+    // deleting set from active Set
+    const handleDeleteFromActiveSet = (name) => {
+        setActiveSet(prev => {
+            const newActiveSet = {...prev};
+
+            delete newActiveSet[name];
+
+            return newActiveSet;
+        })
+    }
+
+
+
+  return (<>
+        <SingleGearSet
+            name={''}
+            gearSet={{front: [], back: []}}
+            updateSet={handleUpdateActiveSet}
+            deleteSet={handleDeleteFromActiveSet}
+            isTemplate={true}
+        />
+        <BuildTable activeSetRatios={activeSetRatios} usableRatiosOnly={false}/>
+        <div style={{width: '100%', height: 400}}>
+            {rechartAllGears.length > 0 ? <LineGraph data={rechartAllGears}/> : ""}
+        </div>
+      <BuildTable activeSetRatios={activeSetRatios} usableRatiosOnly={true}/>
+        <div style={{width: '100%', height: 400}}>
+            {rechartAllGears.length > 0 ? <LineGraph data={rechartUsableGears}/> : ""}
+        </div>
+      <ToastContainer/>
+      {Object.keys(activeSet).map(set => <SingleGearSet
+          key={set}
+          name={set}
+          gearSet={activeSet[set]}
+          updateSet={handleUpdateActiveSet}
+          deleteSet={handleDeleteFromActiveSet}
+      />)}
+
+      </>)
+}
+
+export default App

@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    padding-left: 3vw;
+    margin-bottom: 3vh;
+    gap: 2rem;
+}
+
+.bthHeader {
+    font-size: 1.4rem;
+    height: 2.5rem;
+    /*line-height: 2.5rem;*/
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--background-muted);
+    color: var(--accent-warm);
+    padding: 6px 19px;
+    display: flex;
+    justify-content:  center;
+    align-items: center;
+}
+
+.bthHeader:hover {
+    cursor: pointer;
+    background-color: var(--accent-warm);
+    color: var(--background-muted);
+}
+
+.bthHeader:last-child {
+    margin-left: auto;
+    margin-right: 3vw;
+}

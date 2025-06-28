@@ -1,0 +1,51 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  box-sizing: border-box;
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Base Backgrounds */
+  --background: hsla(35, 40%, 94%, 1);        /* Ivory - main background */
+  --background-muted: hsla(35, 40%, 88%, 1);   /* Slightly darker ivory */
+  --input-bg: hsla(210, 30%, 96%, 1);          /* Subtle gray input */
+  --input-bg-focus: hsla(210, 20%, 94%, 1);    /* Light accent gray */
+
+  /* Text & Foreground */
+  --foreground: hsla(25, 25%, 20%, 1);         /* Deep brown text */
+  --text-muted: hsla(220, 15%, 25%, 1);        /* Muted dark */
+  --text-light: hsla(210, 10%, 23%, 1);        /* Slightly lighter */
+
+  /* Borders & Shadows */
+  --border: hsla(25, 20%, 75%, 1);             /* Soft ivory border */
+  --border-strong: hsla(210, 20%, 88%, 1);     /* Light gray border */
+  --shadow-subtle: hsla(220, 15%, 80%, 0.5);   /* Subtle shadow */
+
+  /* Accents */
+  --accent: hsla(212, 92%, 45%, 1);            /* Bright blue */
+  --accent-light: hsla(212, 92%, 95%, 1);      /* Blue-tinted background */
+  --accent-warm: hsla(15, 60%, 50%, 1);        /* Terracotta */
+  --accent-green: hsla(150, 65%, 45%, 1);      /* Secondary green */
+  --accent-muted-green: hsla(100, 15%, 55%, 1);/* Muted earth green */
+
+  /* Additional Tokens */
+  --highlight: hsla(35, 40%, 88%, 1);          /* For hover or light sections */
+}
+
+
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+

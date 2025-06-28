@@ -1,0 +1,31 @@
+.table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--background);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 4px var(--shadow-subtle);
+}
+
+.table th,
+.table td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+    color: var(--foreground);
+}
+
+.table thead {
+    background: var(--background-muted);
+}
+
+
+
+.table tbody tr:hover {
+    background: var(--accent-light);
+}
+
+.table td:first-child {
+    font-weight: bold;
+    color: var(--text-muted);
+    background: var(--background-muted);
+}
