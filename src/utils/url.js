@@ -52,6 +52,8 @@ function urlParamsEncode () {
                 encodedUrl = `${encodedUrl}${set}_f-${sets[set].front.join(',')}_b-${sets[set].back.join(',')}`;
                 (index+1 < Object.keys(sets).length) ? encodedUrl += ';' : ""
             })
+            // replace whitespaces with %20
+            encodedUrl = encodedUrl.replace(/ /g, '%20');
             return {success: true, encodedUrl: encodedUrl}
         }
     }
@@ -61,8 +63,6 @@ function urlParamsEncode () {
         return {success: false}
     }
     return {success: false}
-
-
 }
 
 
