@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect, useState, useContext} from 'react'
 import {useSearchParams} from "react-router-dom";
 import isEqual from "lodash/isEqual.js";
 import {prepareMultiLineRechartData} from "./utils/prepareRechartData.js";
@@ -10,6 +10,7 @@ import {calculateGearRatios} from "./utils/calculations.js";
 import './App.css'
 import {ToastContainer} from "react-toastify";
 import {getActiveSet} from "./utils/activeSetManager.js";
+import { SettingsContext } from "./contexts/settingsContext.jsx";
 
 function App() {
     /*
@@ -27,8 +28,11 @@ function App() {
 
 
     // User customizable values
-    const [ratioPercentage, setRatioPercentage] = useState(7); // user defined value, what % is acceptable
-    const [crossChaining, setCrossChaining] = useState(true); // calculate or ignore crosschaining (max to max and min to min)
+    const {ratioPercentage, setRatioPercentage, crossChaining, setCrossChaining} = useContext(SettingsContext)
+
+    useEffect(() => {
+        console.log("Now crosschaining is: ", crossChaining)
+    }, [crossChaining])
 
     // Loading and parsing related States
     const [loading, setLoading] = useState(false);
@@ -123,13 +127,7 @@ function App() {
             setActiveSetRatios(newRatios);
         }
 
-    }, [activeSet])
-
-    // TMP: print active set
-    useEffect(() => {
-        // console.log("ACTIVE SET:", activeSet);
-        console.log("ACTIVE SET RATIOS CALCULATED:", activeSetRatios)
-    }, [activeSetRatios])
+    }, [activeSet, crossChaining, ratioPercentage])
 
     // format data to be used in Rechart
     useEffect(() => {

@@ -5,10 +5,14 @@ import { MdDirectionsBike } from "react-icons/md";
 import { toast } from "react-toastify";
 import {urlParamsEncode} from "../utils/url.js";
 import { LuShare2 } from "react-icons/lu";
-import {useState} from "react";
+import { SettingsContext } from "../contexts/settingsContext.jsx";
+import {useContext} from "react";
+import { GiCrossedChains } from "react-icons/gi";
 
 
 export default function Header () {
+
+    const {ratioPercentage, setRatioPercentage, crossChaining, setCrossChaining} = useContext(SettingsContext)
 
     const navigate = useNavigate();
 
@@ -38,6 +42,43 @@ export default function Header () {
             <button className={styles.bthHeader}>
                 <LuShare2/>
             </button>
+            {/* Cross-chaining toggle */}
+            <div className={styles.crossChainToggle}>
+                <input
+                    id={'crosschaining-toggle'}
+                    type={'checkbox'}
+                    className={styles.checkboxInput}
+                    checked={crossChaining}
+                    defaultChecked={crossChaining}
+                    onChange={() => setCrossChaining(!crossChaining)}
+                />
+                <label
+                    htmlFor={'crosschaining-toggle'}
+                    className={styles.checkboxLabel}
+                >Exclude <GiCrossedChains /></label>
+            </div>
+            {/* Overlap % selection */}
+            <div>
+                <select
+                    name="overlapPercentage"
+                    id="overlapPercentage"
+                    className={styles.bthHeader}
+                    value={ratioPercentage}
+                    onChange={(e) => setRatioPercentage(Number(e.target.value))}
+                    title={'aaaaaaaaaaa'}
+                >
+                    <option value="1">1%</option>
+                    <option value="2">2%</option>
+                    <option value="3">3%</option>
+                    <option value="4">4%</option>
+                    <option value="5">5%</option>
+                    <option value="6">6%</option>
+                    <option value="7">7%</option>
+                    <option value="8">8%</option>
+                    <option value="9">9%</option>
+                    <option value="10">10%</option>
+                </select>
+            </div>
             {/* ABOUT */}
             <button
                 className={styles.bthHeader}
