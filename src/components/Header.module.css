@@ -29,3 +29,76 @@
     margin-left: auto;
     margin-right: 3vw;
 }
+
+.crossChainToggle {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: var(--accent-warm);
+    font-size: 1.4rem;
+    height: 2.5rem;
+}
+
+
+/* checkbox is shamefully stolen from internets */
+.checkboxInput {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.checkboxLabel {
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    line-height: 22px;
+    user-select: none;
+}
+
+.checkboxLabel::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent-warm);
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.checkboxLabel::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid var(--background-muted);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.checkboxInput:checked + .checkboxLabel::before {
+    background-color: var(--accent-warm);
+    border-color: var(--accent-warm);
+}
+
+.checkboxInput:checked + .checkboxLabel::after {
+    opacity: 1;
+}
+
+/* acessibility */
+.checkboxInput:focus + .checkboxLabel::before {
+    box-shadow: 0 0 0 2px var(--background-muted), 0 0 0 3px var(--accent-warm);
+}
+
+.overlapOption {
+    background-color: var(--background-muted);
+}
