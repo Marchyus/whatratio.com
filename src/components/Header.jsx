@@ -48,7 +48,6 @@ export default function Header () {
                     id={'crosschaining-toggle'}
                     type={'checkbox'}
                     className={styles.checkboxInput}
-                    checked={crossChaining}
                     defaultChecked={crossChaining}
                     onChange={() => setCrossChaining(!crossChaining)}
                 />
