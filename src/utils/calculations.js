@@ -1,4 +1,5 @@
 // Gear ratio calculator
+// TODO: review logic. Maybe start comparing from Largest front -> smallest front?
 const calculateGearRatios = (front, back, ratioPercentage, crossChaining) => {
     // sort front small -> large sprocket, and rear large -> small sprocket.
     front.sort((a, b) => a - b);
