@@ -48,6 +48,7 @@ const calculateGearRatios = (front, back, ratioPercentage, crossChaining) => {
         usableRatiosLabels.splice(smallestToSmallest, 1);
     }
 
+    // TODO: overcomplicated and brittle. Make one long combined list and sort it? Think about it.
     // remove very close ratios from >1x systems
     if (front.length > 1) {
         for (let i = 0; i < front.length; i++) {
@@ -68,7 +69,7 @@ const calculateGearRatios = (front, back, ratioPercentage, crossChaining) => {
                 for (let j=startAt; j < usableRatios.length; j++ ) {
                     const ratioGap = Math.abs(((tmp[cog] - usableRatios[j]) / ((tmp[cog] + usableRatios[j]) / 2)) * 100);
                     if (ratioGap < ratioPercentage) {
-                        // todo: uncomment this later
+                        // TODO: uncoment below (or use .table) to have fancier console? :D
                         // console.log(`Ratio gap of ${ratioGap.toFixed(1)}% for ${tmp2[cog]} (${tmp[cog].toFixed(2)}) vs. ${usableRatiosLabels[j]} (${usableRatios[j].toFixed(2)}) is less than desired ${ratioPercentage.toFixed(1)}%`)
                         // save before deletion
                         nonUsableGears.duplicates.push(usableRatiosLabels.slice(j, j+1))
@@ -80,6 +81,13 @@ const calculateGearRatios = (front, back, ratioPercentage, crossChaining) => {
             }
         }
     }
+
+    // sort usable ratios, but! keep labels in the same sorted order
+    // might be useless after reworking the main "find similar" logic.
+    const conbinedList = usableRatios.map((ratio, index) => [ratio, usableRatiosLabels[index]])
+    conbinedList.sort((a, b) => a[0] - b[0] )
+    usableRatios = conbinedList.map(item => item[0])
+    usableRatiosLabels = conbinedList.map(item => item[1])
 
     return ({
         allRatios: allRatios,
