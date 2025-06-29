@@ -54,7 +54,7 @@ export default function SingleGearSet ({name, gearSet, updateSet, deleteSet, isT
 
             <input
                 className={`${styles.allInputs} 
-                            ${styles.textDisplayed}
+                            ${(isEditing || isTemplate) ? styles.textEditable : styles.textDisplayed}
                             ${styles.frontGears}`}
                 type={'text'}
                 value={(isEditing || isTemplate) ? editedFront : gearSet.front.join('-')}
@@ -66,7 +66,7 @@ export default function SingleGearSet ({name, gearSet, updateSet, deleteSet, isT
 
             <input
                 className={`${styles.allInputs} 
-                            ${styles.textDisplayed}
+                            ${(isEditing || isTemplate) ? styles.textEditable : styles.textDisplayed}
                             ${styles.rearGears}`}
                 type={'text'}
                 value={(isEditing || isTemplate) ? editedBack : gearSet.back.join('-')}
@@ -79,7 +79,7 @@ export default function SingleGearSet ({name, gearSet, updateSet, deleteSet, isT
 
                 <input
                     className={`${styles.allInputs} 
-                                ${styles.textDisplayed}
+                                ${(isEditing || isTemplate) ? styles.textEditable : styles.textDisplayed}
                                 ${styles.nameField}`}
                     type={'text'}
                     value={(isEditing || isTemplate) ? editedName : name}
@@ -94,6 +94,7 @@ export default function SingleGearSet ({name, gearSet, updateSet, deleteSet, isT
                         (<button
                             onClick={handleSave}
                             className={`${styles.btnSave} ${styles.anyButton}`}
+                            disabled={!(editedFront.length > 0 && editedBack.length > 0)}
                         > <MdAddCircleOutline />
                         </button> ): isEditing ?
                             <><button
