@@ -1,6 +1,8 @@
 import {getActiveSet} from "./activeSetManager.js";
 import {toast} from "react-toastify";
 
+
+// TODO: URL parsing kida split into two parts. Gears are parsed here, and overlap/crosschaining in App.jsx. Fix, maybe?
 function urlParamsParse (setsParam) {
     const allSets = setsParam.split(';');
     let completeSetFromUlr = {};
@@ -40,8 +42,8 @@ function urlParamsParse (setsParam) {
     }
     return completeSetFromUlr;
 }
-
-function urlParamsEncode () {
+// TODO: same with encoding, just pass in all 3?
+function urlParamsEncode ({ratioPercentage, crossChaining}) {
     try {
         const result = getActiveSet();
         if (result.success && Object.keys(result.activeSet).length > 0) {
@@ -54,6 +56,10 @@ function urlParamsEncode () {
             })
             // replace whitespaces with %20
             encodedUrl = encodedUrl.replace(/ /g, '%20');
+            // add crosschaining flag
+            encodedUrl += `&ecc=${crossChaining ? 1 : 0}`
+            // add overlap percentage
+            encodedUrl += `&o=${ratioPercentage}`
             return {success: true, encodedUrl: encodedUrl}
         }
     }
