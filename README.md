@@ -1,18 +1,23 @@
 # Why?
 
-2x? 1x? Doesn't matter? 3x? A lot of _(useless ;) )_ discussions and opinions. Here - only numbers and graphs.
+2x? 1x? Doesn't matter? 3x? A lot of discussions and opinions. Here - only numbers and graphs.
 
 # How to
 ## Manually
-Enter front and back cassette sizes (separated by ___, - : ;___), 
+Type in chainring(s) and back cassette size (separated by ___, - : ;___), 
 add (optional) set name. 
 Adding one or more set to the list draws all tables and graphics.
 
 ## Semi-Automatically 
-Sets to compare could be encoded in URL. E.g., visiting:
-[https://whatratio.com/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44](https://whatratio.com/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44)
+Sets to compare could be encoded in URL, eg.:
+[http://localhost:5173/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44&ecc=1&o=4](http://localhost:5173/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44&ecc=1&o=4)
 
-
-Would display a comparition of **grx 400** _30-46_ ✕ _32-28-25-22-20-18-16-14-12-11_ 
-and **SRAM Apex 1** with _40_ ✕ _44-38-32-28-24-21-19-17-15-13-12-11_
+here:
+* `sets=` - array of Ratios to compare. In this example it's:
+  *  _grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11_ <br/> `grx%20400` - name (%20 is space) <br/> `f-30,46` - front chainring(s) <br/> `b-32,28,25,22,20,18,16,14,12,11` - rear cassette  
+  *  _SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44_ <br/> `SRAM%20Apex%201` - name (%20 is space) <br/> `f-40` - front chainring(s) <br/> `b-11,12,13,15,17,19,21,24,28,32,38,44` - rear cassette
+* `ecc=` - exclude cross-chained gears from usable gear list?
+  * `1` - yes
+  * `0` - no
+* `o=` - Overlap percentage (`1` to `10`). How close should be two gears, for them to be considered "basically same"  
 
