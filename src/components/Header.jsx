@@ -17,7 +17,7 @@ export default function Header () {
     const navigate = useNavigate();
 
     const handleCopy = () => {
-        const urlEncoded = urlParamsEncode();
+        const urlEncoded = urlParamsEncode({ratioPercentage, crossChaining});
         if (urlEncoded.success) {
             navigator.clipboard.writeText(`${window.location.href}${urlEncoded.encodedUrl}`);
             toast.success("URL copied");
@@ -25,7 +25,11 @@ export default function Header () {
         else {
             toast.warn("Failed to copy ratio URL");
         }
+    }
 
+    const handleShare = () => {
+        console.log("RATIO: ", ratioPercentage);
+        console.log("Crosschaining: ", crossChaining);
     }
 
     return(
@@ -39,7 +43,7 @@ export default function Header () {
                 <FaRegCopy />
             </button>
             {/* SHARE */}
-            <button className={styles.bthHeader}>
+            <button className={styles.bthHeader} onClick={handleShare}>
                 <LuShare2/>
             </button>
             {/* Cross-chaining toggle */}
@@ -48,7 +52,7 @@ export default function Header () {
                     id={'crosschaining-toggle'}
                     type={'checkbox'}
                     className={styles.checkboxInput}
-                    defaultChecked={crossChaining}
+                    checked={crossChaining}
                     onChange={() => setCrossChaining(!crossChaining)}
                 />
                 <label
