@@ -30,15 +30,15 @@ function App() {
     // User customizable values
     const {ratioPercentage, setRatioPercentage, crossChaining, setCrossChaining} = useContext(SettingsContext)
 
-    useEffect(() => {
-        console.log("Now crosschaining is: ", crossChaining)
-    }, [crossChaining])
+    // useEffect(() => {
+    //     console.log("Now crosschaining is: ", crossChaining)
+    // }, [crossChaining])
 
     // Loading and parsing related States
     const [loading, setLoading] = useState(false);
     const [isUrlSetsParsed, setIsUrlSetsParsed] = useState(false);
     const [isActiveSetParsed, setIsActiveSetParsed] = useState(false);
-
+    const [queryParameters, setSearchParameters] = useSearchParams();
 
     // functions to be moved to own utility files
     // Read from history
@@ -56,21 +56,32 @@ function App() {
     }, []);
 
     // Get URL params from URL
-    const [queryParameters, setSearchParameters] = useSearchParams();
     useEffect(() => {
-        const setsParam = queryParameters.get('sets'); // read .../?sets=
+        const setsParam = queryParameters.get('sets'); // read .../?sets= to get gear sets
+        const excludeCrossChaining = queryParameters.get('ecc'); // read .../?ecc= to get 1 or 0 if Crosschain to be excluded from calculations
+        const overlap = queryParameters.get('o'); // read .../?o= to get overlap percentage
         if (setsParam) {
             const parsedUrlParams = urlParamsParse(setsParam) // parse parameters from url
             setGearSetsInUrl(parsedUrlParams); // save parameters
-            setSearchParameters({}, {replace: true}); // clear URL
-            setIsUrlSetsParsed(true);
         }
+
+        if (excludeCrossChaining && (Number(excludeCrossChaining) === 0 || Number(excludeCrossChaining) === 1) ) {
+            setCrossChaining(Number(excludeCrossChaining) === 1 ? true : false);
+        }
+
+        if (overlap && Number(overlap) > 0 && Number(overlap) <= 10 ){
+            setRatioPercentage(Math.floor(Number(overlap)))
+        }
+
+        setSearchParameters({}, {replace: true}); // clear URL
+        setIsUrlSetsParsed(true);
+
     }, [])
+
 
     // Read current active set
     useEffect(() => {
         const result = getActiveSet();
-            console.log("THIS ARE RESULTS:", result)
             if (result.success) {
                 setActiveSet(result.activeSet)
             }
@@ -195,15 +206,18 @@ function App() {
             deleteSet={handleDeleteFromActiveSet}
             isTemplate={true}
         />
+      {Object.keys(activeSet).length > 0 ? (<h1 className={'section-title'}>All gears</h1>) : ""}
         <BuildTable activeSetRatios={activeSetRatios} usableRatiosOnly={false}/>
         <div style={{width: '100%', height: 400}}>
             {rechartAllGears.length > 0 ? <LineGraph data={rechartAllGears}/> : ""}
         </div>
+      {Object.keys(activeSet).length > 0 ? (<h1 className={'section-title'}>Usable gears</h1>) : ""}
       <BuildTable activeSetRatios={activeSetRatios} usableRatiosOnly={true}/>
         <div style={{width: '100%', height: 400}}>
             {rechartAllGears.length > 0 ? <LineGraph data={rechartUsableGears}/> : ""}
         </div>
       <ToastContainer/>
+      {Object.keys(activeSet).length > 0 ? (<h1 className={'section-title'}>Sets</h1>) : ""}
       {Object.keys(activeSet).map(set => <SingleGearSet
           key={set}
           name={set}
