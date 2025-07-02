@@ -18,9 +18,10 @@ export function SettingsProvider ({children}) {
                 console.error("Failed to parse settings from history: ", err);
                 console.log("Clearing settings in storage");
                 localStorage.removeItem('activeSetSettings');
+                return defaultSetSettings;
             }
-            return defaultSetSettings;
         }
+        return defaultSetSettings;
     }
     // get initial settings OR settings from storage
     const initialSettings = getInitialSettings();
