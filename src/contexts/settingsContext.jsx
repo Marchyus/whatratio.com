@@ -26,8 +26,8 @@ export function SettingsProvider ({children}) {
     const initialSettings = getInitialSettings();
 
     // User customizable values
-    const [ratioPercentage, setRatioPercentage] = useState(initialSettings.o); // user defined value, what % is acceptable
-    const [crossChaining, setCrossChaining] = useState(initialSettings.ecc); // calculate or ignore crosschaining (max to max and min to min)
+    const [ratioPercentage, setRatioPercentage] = useState(initialSettings?.o || 5); // user defined value, what % is acceptable
+    const [crossChaining, setCrossChaining] = useState(initialSettings?.ecc || true); // calculate or ignore crosschaining (max to max and min to min)
 
     // always update settings in local storage
     useEffect(() => {
