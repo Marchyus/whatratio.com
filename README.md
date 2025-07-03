@@ -10,7 +10,7 @@ Adding one or more set to the list draws all tables and graphics.
 
 ## Semi-Automatically 
 Sets to compare could be encoded in URL, eg.:
-[http://localhost:5173/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44&ecc=1&o=4](http://localhost:5173/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44&ecc=1&o=4)
+[http://whatratio.com/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44&ecc=1&o=4](http://whatratio.com/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44&ecc=1&o=4)
 
 here:
 * `sets=` - array of Ratios to compare. In this example it's:
