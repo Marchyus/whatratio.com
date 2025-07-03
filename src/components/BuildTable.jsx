@@ -1,10 +1,15 @@
 import PropTypes from "prop-types";
 import styles from './BuildTable.module.css';
 
+
 export default function BuildTable ({activeSetRatios, usableRatiosOnly}) {
 
+    // not perfect, do I even need to strip this?
     const stripedRatios =  Object.fromEntries(
         Object.keys(activeSetRatios).map(key => [key, usableRatiosOnly ? activeSetRatios[key].usableRatiosOnly : activeSetRatios[key].allRatios])
+    );
+    const stripedLabels =  Object.fromEntries(
+        Object.keys(activeSetRatios).map(key => [key, usableRatiosOnly ? activeSetRatios[key].usableRatiosLabels : activeSetRatios[key].allRatiosLabels])
     );
 
     // let maxGear = Math.max(...Object.keys(stripedRatios).map(key => stripedRatios[key].length));
@@ -37,7 +42,11 @@ export default function BuildTable ({activeSetRatios, usableRatiosOnly}) {
                     return (<tr key={`${key}_tr`}>
                                 <td><span>{key}</span> →</td>
                                 {stripedRatios[key].map((ratio,index) => (
-                                    <td key={`${key}_${index}`}>
+                                    <td key={`${key}_${index}`}
+                                        data-tooltip-id="ratio-tooltip"
+                                        data-tooltip-html={`#${index+1} gear:<br/>${stripedLabels[key][index]}`}
+                                        data-tooltip-place="bottom"
+                                    >
                                         {ratio}
                                     </td>
                                 ))}

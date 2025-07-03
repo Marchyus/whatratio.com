@@ -25,6 +25,17 @@
     color: var(--background-muted);
 }
 
+.btnCopy:hover {
+    cursor: copy;
+}
+
+.activeShareBtn {
+    cursor: pointer;
+    background-color: var(--accent-warm);
+    color: var(--background-muted);
+}
+
+
 .bthHeader:last-child {
     margin-left: auto;
     margin-right: 3vw;
@@ -101,4 +112,43 @@
 
 .overlapOption {
     background-color: var(--background-muted);
+}
+
+.shareMenu {
+    margin-bottom: 5vh;
+    text-align: left;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 6px var(--shadow-subtle);
+    max-width: 900px;
+    font-size: 1.4rem;
+    height: 2.5rem;
+    background-color: var(--background-muted);
+    color: var(--accent-warm);
+    display: flex;
+}
+
+.shareOptions {
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.shareOption {
+    display: flex;
+    width: 100%;
+}
+
+.shareMenuUrl {
+    flex: 1;
+    min-width: 80%;
+    border: none;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    background-color: var(--accent-light);
+}
+
+.bigShareBtn {
+    font-size: 3rem;
 }

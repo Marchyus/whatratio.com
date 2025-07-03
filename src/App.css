@@ -29,8 +29,19 @@
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   padding-left: 1rem;
+  width: 100%;
+  text-align: left;
+}
+
+
+.section-description {
+  text-align: left;
+  font-size: 1rem;
+  color: var(--text-light);
+  margin: -1rem 0 2rem 1rem;
+  padding-left: 0.25rem;
   border-right: 1px dashed var(--accent-warm);
   border-top: 1px solid var(--accent-warm);
   border-top-right-radius: 1rem;
-  width: 100%;
 }
+

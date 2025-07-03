@@ -1,4 +1,5 @@
 .table table {
+    margin-bottom: 2vh;
     width: 100%;
     border-collapse: collapse;
     background: var(--background);
