@@ -69,6 +69,11 @@ width: 100%;
 width: 100%;
 }
 
+.btnEdit:hover,
+.btnSave:hover,
+.btnCancel:hover {
+    cursor: pointer;
+}
 
 
 .anyButton {

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import Root from './routes/Root.jsx'
+import About from "./components/About.jsx";
 
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
@@ -17,7 +18,7 @@ const route = createBrowserRouter([
             },
             {
                 path: 'about',
-                element: <div> plop about here </div>
+                element: <About/>
             }
         ]
     }
