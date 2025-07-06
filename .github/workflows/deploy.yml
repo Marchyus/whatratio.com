@@ -14,9 +14,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Add CNAME file
-        run: echo 'whatratio.com' > ./dist/CNAME
-
       - name: Setup node
         uses: actions/setup-node@v4
         with:
@@ -27,6 +24,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Add CNAME file
+        run: echo 'whatratio.com' > ./dist/CNAME
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
