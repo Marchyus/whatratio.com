@@ -18,6 +18,7 @@ export default function Header () {
 
     const [sharingVisible, setSharingVisible] = useState(false);
 
+
     const handleCopy = () => {
         const urlEncoded = urlParamsEncode({ratioPercentage, crossChaining});
         if (urlEncoded.success) {
@@ -30,8 +31,6 @@ export default function Header () {
     }
 
     const handleShare = () => {
-        console.log("RATIO: ", ratioPercentage);
-        console.log("Crosschaining: ", crossChaining);
         setSharingVisible(!sharingVisible);
     }
 
@@ -50,7 +49,7 @@ export default function Header () {
             </button>
             {/* Copy URL */}
             <button
-                className={`${styles.bthHeader} ${styles.btnCopy}`}
+                className={`${styles.bthHeader} ${styles.btnCopy} ${styles.largeScreen}`}
                 onClick={handleCopy}
                 data-tooltip-id="explanation-tooltip"
                 data-tooltip-html={`Copy URL to this `}
@@ -86,6 +85,7 @@ export default function Header () {
                 >Exclude <GiCrossedChains /></label>
             </div>
             {/* Overlap % selection */}
+            {/* Overlap % selection */}
             <div>
                 <select
                     name="overlapPercentage"
@@ -114,7 +114,8 @@ export default function Header () {
                 className={styles.bthHeader}
                 onClick={() => navigate('about')}
             >
-                About
+                <span className={styles.largeScreen}>About</span>
+                <span className={styles.smallScreen}>?</span>
             </button>
         </div>
         {sharingVisible ? (

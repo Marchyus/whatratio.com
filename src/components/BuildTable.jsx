@@ -18,7 +18,6 @@ export default function BuildTable ({activeSetRatios, usableRatiosOnly}) {
         return Math.max(max, currentLength)
     }, 0)
 
-    // stop working if max is 0. TODO: Add some visuals anyways?
     if (maxGear === 0) {
         return (<div> - </div>)
     }

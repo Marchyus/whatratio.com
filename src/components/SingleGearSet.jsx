@@ -112,7 +112,7 @@ export default function SingleGearSet ({name, gearSet, updateSet, deleteSet, isT
                                 ><FaEdit/></button>
                                 <button
                                     onClick={handleDelete}
-                                    className={`${styles.btnEdit} ${styles.anyButton}`}
+                                    className={`${styles.btnCancel} ${styles.anyButton}`}
                                 ><MdDeleteForever/></button>
                             </>
                     }

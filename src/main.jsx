@@ -23,7 +23,6 @@ const route = createBrowserRouter([
         ]
     }
 ],
-    // Fix github pages base page
     {
         basename: import.meta.env.BASE_URL
     }

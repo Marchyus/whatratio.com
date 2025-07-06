@@ -48,7 +48,6 @@ const calculateGearRatios = (front, back, ratioPercentage, crossChaining) => {
         usableRatiosLabels.splice(smallestToSmallest, 1);
     }
 
-    // TODO: overcomplicated and brittle. Make one long combined list and sort it? Think about it.
     // remove very close ratios from >1x systems
     if (front.length > 1) {
         for (let i = 0; i < front.length; i++) {
@@ -58,7 +57,6 @@ const calculateGearRatios = (front, back, ratioPercentage, crossChaining) => {
             let finishAt = undefined;
 
             // grab a batch of ratios to compare. I know if had to be separate arrays, but I like this
-            // TODO: works for 2x, think about 3x or anyx
             if (i === 0) {
                 tmp = usableRatios.slice(0, crossChaining ? back.length-1 : back.length);
                 tmp2 = usableRatiosLabels.slice(0, crossChaining ? back.length-1 : back.length);
@@ -69,8 +67,7 @@ const calculateGearRatios = (front, back, ratioPercentage, crossChaining) => {
                 for (let j=startAt; j < usableRatios.length; j++ ) {
                     const ratioGap = Math.abs(((tmp[cog] - usableRatios[j]) / ((tmp[cog] + usableRatios[j]) / 2)) * 100);
                     if (ratioGap < ratioPercentage) {
-                        // TODO: uncoment below (or use .table) to have fancier console? :D
-                        // console.log(`Ratio gap of ${ratioGap.toFixed(1)}% for ${tmp2[cog]} (${tmp[cog].toFixed(2)}) vs. ${usableRatiosLabels[j]} (${usableRatios[j].toFixed(2)}) is less than desired ${ratioPercentage.toFixed(1)}%`)
+                        console.log(`Ratio gap of ${ratioGap.toFixed(1)}% for ${tmp2[cog]} (${tmp[cog].toFixed(2)}) vs. ${usableRatiosLabels[j]} (${usableRatios[j].toFixed(2)}) is less than desired ${ratioPercentage.toFixed(1)}%`)
                         // save before deletion
                         nonUsableGears.duplicates.push(usableRatiosLabels.slice(j, j+1))
                         usableRatios.splice(j, 1);

@@ -1,6 +1,12 @@
+.table {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+}
+
 .table table {
     margin-bottom: 2vh;
-    width: 100%;
+    min-width: 100%;
     border-collapse: collapse;
     background: var(--background);
     border: 1px solid var(--border);

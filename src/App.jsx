@@ -31,9 +31,6 @@ function App() {
     // User customizable values
     const {ratioPercentage, setRatioPercentage, crossChaining, setCrossChaining} = useContext(SettingsContext)
 
-    // useEffect(() => {
-    //     console.log("Now crosschaining is: ", crossChaining)
-    // }, [crossChaining])
 
     // Loading and parsing related States
     const [loading, setLoading] = useState(false);
@@ -207,30 +204,36 @@ function App() {
             deleteSet={handleDeleteFromActiveSet}
             isTemplate={true}
         />
-      {Object.keys(activeSet).length > 0 ? (<><h1 className={'section-title'}>All gears</h1><p className="section-description">
+      <h1 className={'section-title'}>All gears</h1>
+      {Object.keys(activeSet).length > 0 ? (<p className="section-description">
           Every possible front-rear gear combo, including identical and awkward cross-chained ones. Useful for spotting total range and gear spacing.
-      </p></>) : ""}
+      </p>) : <p className="section-description">
+          ..add set to start
+      </p>}
         <BuildTable activeSetRatios={activeSetRatios} usableRatiosOnly={false}/>
-        <div style={{width: '100%', height: 400}}>
+        <div style={{width: '100%'}}>
             {rechartAllGears.length > 0 ? <LineGraph data={rechartAllGears}/> : ""}
         </div>
       {/* Table and graph with all available gears */}
+      <h1 className={'section-title'}>Usable gears</h1>
       {Object.keys(activeSet).length > 0 ?
-          (<>
-              <h1 className={'section-title'}>Usable gears</h1>
-              <p className="section-description">
+          (<p className="section-description">
                   A filtered view showing only clean, usable gears{crossChaining ? (' and cross-chaining excluded') : ''}. Focused on what's actually ridden.
-              </p>
-          </>) :
-          ""}
+          </p>) :
+          <p className="section-description">
+              ..add set to start
+          </p>}
       <BuildTable activeSetRatios={activeSetRatios} usableRatiosOnly={true}/>
-        <div style={{width: '100%', height: 400}}>
+        <div style={{width: '100%'}}>
             {rechartAllGears.length > 0 ? <LineGraph data={rechartUsableGears}/> : ""}
         </div>
       <ToastContainer/>
-      {Object.keys(activeSet).length > 0 ? (<><h1 className={'section-title'}>Sets</h1><p className="section-description">
+      <h1 className={'section-title'}>Sets</h1>
+      {Object.keys(activeSet).length > 0 ? (<p className="section-description">
           Setups in comparison. Add, edit, rename or remove any, to update tables and graphs above.
-      </p></>) : ""}
+      </p>) : <p className="section-description">
+          ..no active set(s)
+      </p>}
       {Object.keys(activeSet).map(set => <SingleGearSet
           key={set}
           name={set}

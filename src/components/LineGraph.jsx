@@ -17,8 +17,6 @@ const LineGraph = ({data}) => {
     return (
         <ResponsiveContainer width="100%" aspect={3}>
             <LineChart
-                width={900}
-                height={300}
                 data={data}
                 margin={{
                     top: 5,

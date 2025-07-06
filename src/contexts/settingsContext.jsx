@@ -32,7 +32,6 @@ export function SettingsProvider ({children}) {
 
     // always update settings in local storage
     useEffect(() => {
-        // console.log('Writing to local storage: ', {ecc: crossChaining, o: ratioPercentage})
         localStorage.setItem('activeSetSettings', JSON.stringify({ecc: crossChaining, o: ratioPercentage}))
     }, [ratioPercentage, crossChaining])
 

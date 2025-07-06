@@ -17,6 +17,8 @@
     display: flex;
     justify-content:  center;
     align-items: center;
+    transition: transform 0.05s ease, box-shadow 0.1s ease;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
 }
 
 .bthHeader:hover {
@@ -25,12 +27,17 @@
     color: var(--background-muted);
 }
 
+.bthHeader:active {
+    color: var(--background-muted);
+    transform: scale(0.96);
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2);
+}
+
 .btnCopy:hover {
     cursor: copy;
 }
 
 .activeShareBtn {
-    cursor: pointer;
     background-color: var(--accent-warm);
     color: var(--background-muted);
 }
@@ -152,3 +159,36 @@
 .bigShareBtn {
     font-size: 3rem;
 }
+
+.smallScreen {
+    display: none;
+}
+
+.largeScreen {
+    display: inline;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .largeScreen {
+        display: none;
+    }
+
+    .smallScreen {
+        display: inline;
+    }
+
+    .container {
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding: 0 1rem;
+    }
+
+    .crossChainToggle,
+    .bthHeader:last-child {
+        margin-left: 0;
+    }
+}
+

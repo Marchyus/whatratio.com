@@ -41,8 +41,6 @@ export function prepareMultiLineRechartData (activeSet) {
         return newPoint
     });
 
-    // console.log("Data for graph, all: ", allRechart)
-    // console.log("Data for graph, usable: ", usableRechart)
 
     return {allRechart: allRechart, usableRechart: usableRechart};
 

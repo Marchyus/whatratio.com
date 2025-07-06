@@ -24,7 +24,7 @@ export default function About() {
             <p>Click <MdAddCircleOutline /> to add gear set to comparison. </p>
 
             <h3 className={styles.subHeading}>2. URL Sharing</h3>
-            <p>You can share full setups by copying website URL: </p>
+            <p>You can share full setups by copying website URL. E.g. Click <a href={'https://whatratio.com/?sets=grx%20400_f-30,46_b-32,28,25,22,20,18,16,14,12,11;SRAM%20Apex%201_f-40_b-11,12,13,15,17,19,21,24,28,32,38,44&ecc=1&o=4'}>here</a> to see grx 400 vs SRAM Apex 1 comparison. </p>
                 <img src={'copyUrl.png'} className={styles.image}/>
             <p>here: </p>
             <code className={styles.urlExample}>
